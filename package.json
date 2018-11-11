@@ -1,10 +1,14 @@
 {
   "name": "raspberry-temperature",
+  "author": "Florian Kelnerowski",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.7.3",
     "react": "^16.6.1",
+    "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.6.1",
+    "react-icons": "^3.2.2",
     "react-scripts": "2.1.1"
   },
   "scripts": {
