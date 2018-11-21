@@ -1,27 +1,43 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
 import { FaAngleLeft, FaAngleRight} from 'react-icons/fa'; 
-import dataTemp from '../data.json';
+import Axios from 'axios';
+
+console.log(window.location.href)
+
+var dataTemp = {}
+// current date = new date toujours pour le calcul des jours
+var currentDate = new Date()
+// display date = pour la recherche json et affichage
+var displayDate = currentDate.toLocaleDateString('fr-FR').slice(0,10);
+//console.log("currentdate"+currentDate)
+// console.log("displaydate"+displayDate)
 
 export class LineCustom extends React.Component {
   constructor(props) {
     super(props);
-    // current date = new date toujours pour le calcul des jours
-    // display date = pour la recherche json et affichage
-    var currentDate = new Date();
-    var displayDate = currentDate.toLocaleDateString('fr-FR').slice(0,10);
-    
-    //console.log("currentdate"+currentDate)
-    //console.log("displaydate"+displayDate)
     // This binding is necessary to make `this` work in the callback
     this.goToPreviousDay = this.goToPreviousDay.bind(this, currentDate); 
     this.goToNextDay = this.goToNextDay.bind(this, currentDate); 
     this.state = {
       arrayDate : this.getArrayOfDate(dataTemp, displayDate),
       tempDate : this.getArrayOfTemp(dataTemp, displayDate),
-      currentDate : currentDate,
-      displayDate : displayDate
     }
+    
+    Axios.get('http://raspberryflo.ddns.net/raspberry-temperature/data.json',{
+      crossdomain : true
+    }).then( response => {
+      dataTemp = response.data
+      this.setState(state => ({
+        currentDate : currentDate,
+        displayDate : displayDate,
+        arrayDate : this.getArrayOfDate(dataTemp, displayDate),
+        tempDate : this.getArrayOfTemp(dataTemp, displayDate),
+      }));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   goToPreviousDay(currentDate){
@@ -58,7 +74,7 @@ export class LineCustom extends React.Component {
     let data = [];
     for (var key in dataTemp) {
       //console.log(key.substring(0,10))
-      if(key.substring(0,10) == displayDate) {
+      if(key.substring(0,10) === displayDate) {
         //console.log(key)
         data.push(key)
       }
@@ -71,7 +87,7 @@ export class LineCustom extends React.Component {
     // ES6 format 
     let data = [];
     Object.entries(dataTemp).forEach(([key, value]) => {
-      if(key.substring(0,10) == displayDate)
+      if(key.substring(0,10) === displayDate)
         data.push(value)
     })
     return data
@@ -108,7 +124,7 @@ export class LineCustom extends React.Component {
 
     return (
       <div>
-        <span class="changeDate">
+        <span className="changeDate">
           <FaAngleLeft size='3em' onClick={this.goToPreviousDay}/>
           <h2>{this.state.displayDate}</h2>
           <FaAngleRight size='3em' onClick={this.goToNextDay}/>
