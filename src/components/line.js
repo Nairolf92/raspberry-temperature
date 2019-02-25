@@ -3,8 +3,6 @@ import {Line} from 'react-chartjs-2';
 import { FaAngleLeft, FaAngleRight} from 'react-icons/fa'; 
 import Axios from 'axios';
 
-console.log(window.location.href)
-
 var dataTemp = {}
 // current date = new date toujours pour le calcul des jours
 var currentDate = new Date()
@@ -24,8 +22,7 @@ export class LineCustom extends React.Component {
       tempDate : this.getArrayOfTemp(dataTemp, displayDate),
     }
     
-    Axios.get('http://raspberryflo.ddns.net/raspberry-temperature/data.json',{
-      crossdomain : true
+    Axios.get('https://raspberryflo.ddns.net/raspberry-temperature/data.json',{
     }).then( response => {
       dataTemp = response.data
       this.setState(state => ({
