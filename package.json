@@ -1,7 +1,7 @@
 {
   "name": "raspberry-temperature",
   "author": "Florian Kelnerowski",
-  "homepage": "http://raspberryflo.ddns.net/raspberry-temperature/build",
+  "homepage": "https://floriankelnerow.ski/raspberry-temperature/build",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
