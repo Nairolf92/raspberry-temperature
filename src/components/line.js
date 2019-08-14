@@ -22,7 +22,7 @@ export class LineCustom extends React.Component {
       tempDate : this.getArrayOfTemp(dataTemp, displayDate),
     }
     
-    Axios.get('https://floriankelnerow.ski/raspberry-temperature-data/data.json',{
+    Axios.get('https://floriankelnerow.ski/raspberry-temperature/data.json',{
     }).then( response => {
       dataTemp = response.data
       this.setState(state => ({
